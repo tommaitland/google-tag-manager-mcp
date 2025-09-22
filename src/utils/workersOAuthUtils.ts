@@ -597,11 +597,11 @@ export function renderApprovalDialog(
           <p class="subtitle">
             A remote MCP server with Google OAuth authentication for the Google Tag Manager API.
           </p>
-          
+
           <div class="card">
-            
+
             <h2 class="alert"><strong>${clientName || "A new MCP Client"}</strong> is requesting access</h1>
-            
+
             <div class="client-info">
               <div class="client-detail">
                 <div class="detail-label">Name:</div>
@@ -609,7 +609,7 @@ export function renderApprovalDialog(
                   ${clientName}
                 </div>
               </div>
-              
+
               ${
                 clientUri
                   ? `
@@ -624,7 +624,7 @@ export function renderApprovalDialog(
               `
                   : ""
               }
-              
+
               ${
                 policyUri
                   ? `
@@ -639,7 +639,7 @@ export function renderApprovalDialog(
               `
                   : ""
               }
-              
+
               ${
                 tosUri
                   ? `
@@ -654,7 +654,7 @@ export function renderApprovalDialog(
               `
                   : ""
               }
-              
+
               ${
                 redirectUris.length > 0
                   ? `
@@ -667,7 +667,7 @@ export function renderApprovalDialog(
               `
                   : ""
               }
-              
+
               ${
                 contacts
                   ? `
@@ -679,7 +679,7 @@ export function renderApprovalDialog(
                   : ""
               }
             </div>
-            
+
             <p>This MCP Client is requesting to be authorized to access Google Tag Manager. If you approve, you will be redirected to complete authentication.</p>
 
             <form method="post" action="${new URL(request.url).pathname}">
@@ -694,8 +694,8 @@ export function renderApprovalDialog(
 
           <footer>
             <div class="footer-links">
-              <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
-              <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+              <a href="/privacy" target="_blank">Privacy Policy</a>
+              <a href="/terms" target="_blank">Terms of Service</a>
             </div>
             <div class="attribution">
               This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.

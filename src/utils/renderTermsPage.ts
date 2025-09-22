@@ -114,11 +114,11 @@ export const renderTermsPage = () => {
         <p><strong>Last updated:</strong> September 22, 2025</p>
 
         <p>Please read these Terms of Service ("Terms") carefully before using the Filament MCP Server for Google Tag Manager (the "Service") operated by Errinundra Pty Ltd t/a Filament AI (ABN 29 680 843 814) ("Company", "us", "we", or "our").</p>
-        
+
         <p>When we refer to "you" or "your", we mean any person that accesses or uses the Service. Your use of the Service is subject to these Terms and our <a href="/privacy">Privacy Notice</a>.</p>
-        
+
         <p><strong>YOUR ACCESS TO AND USE OF THE SERVICE IS CONDITIONED ON YOUR ACCEPTANCE OF AND COMPLIANCE WITH THESE TERMS. BY ACCESSING OR USING THE SERVICE YOU AGREE TO BE BOUND BY THESE TERMS. IF YOU DISAGREE WITH ANY PART OF THE TERMS THEN YOU MAY NOT ACCESS THE SERVICE.</strong></p>
-    
+
         <div class="section">
             <h2>1. General Terms</h2>
             <ul>
@@ -133,7 +133,7 @@ export const renderTermsPage = () => {
                 </li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>2. Service Functionality</h2>
             <p>The Service provides middleware proxy capabilities for Google Tag Manager API access, including:</p>
@@ -144,7 +144,7 @@ export const renderTermsPage = () => {
                 <li>Supporting all Google Tag Manager API endpoints for comprehensive GTM management</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>3. User Conduct</h2>
             <p>When using the Service you agree to not:</p>
@@ -158,7 +158,7 @@ export const renderTermsPage = () => {
                 <li>Violate the legislation which may apply to you when using the Service</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>5. Authentication and Access</h2>
             <ul>
@@ -168,7 +168,7 @@ export const renderTermsPage = () => {
                 <li>We store only OAuth tokens necessary for service functionality</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>6. Data Handling and Privacy</h2>
             <ul>
@@ -178,7 +178,7 @@ export const renderTermsPage = () => {
                 <li>See our Privacy Policy for detailed information</li>
             </ul>
         </div>
-    
+
         <div class="highlight">
             <h2>Compliance with Google Policies and Limited Use Requirements</h2>
             <p>The Service complies with:</p>
@@ -187,19 +187,19 @@ export const renderTermsPage = () => {
                 <li>Google Tag Manager API Terms of Service</li>
                 <li>Limited Use requirements for API data</li>
             </ul>
-            
+
             <p><strong>Affirmative Compliance Statement:</strong><br>
             <em>"The use of raw or derived user data received from Workspace APIs will adhere to the Google User Data Policy, including the Limited Use requirements."</em></p>
-            
+
             <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="color: #856404; margin: 0;"><strong>AI/ML Prohibition:</strong> We do not use any Google API data for AI/ML model training or improvement at all. This service operates as a middleware proxy without any artificial intelligence or machine learning functionality.</p>
             </div>
         </div>
-    
+
         <div class="section">
             <h2>4. Liability</h2>
             <p>Violation of these Terms will result in liability under the applicable law, unless otherwise provided in the Terms.</p>
-            
+
             <p>To the extent permitted by the applicable law, the Company and its affiliates shall not be liable for:</p>
             <ul>
                 <li>The accuracy, completeness of the Service and its Content</li>
@@ -212,20 +212,20 @@ export const renderTermsPage = () => {
                 <li>Any loss or damage of any kind incurred as a result of your use of the Service, whether or not the Company advised of the possibility of such damages</li>
                 <li>Other risks associated with the use of online platforms and services</li>
             </ul>
-            
+
             <p>The Service is provided on the "as-is" basis without any warranty or guarantee whatsoever.</p>
-            
+
             <p>To the extent permitted by the applicable law, you agree to defend, indemnify, and hold harmless the Company from and against all claims, damages, obligations, losses, liabilities, costs or debts, and expenses (including, but not limited to, attorney fees) arising from:</p>
             <ul>
                 <li>Your use of the Service</li>
                 <li>Your violation of these Terms and the applicable law</li>
             </ul>
-            
+
             <p>In case of any circumstances of insuperable force (i.e. events of extraordinary or insuperable nature) that have occurred and remain in effect beyond the party's control and that a party could neither foresee nor prevent for objective reasons, if these circumstances prevent a party from proper fulfilment of its obligations hereunder, the term for the fulfilment of such obligations shall be extended for the period of the effect of such circumstances of insuperable force.</p>
-            
+
             <p>The circumstances of insuperable force shall include wars and other military operations, earthquakes, floods, and other natural disasters, adoption of laws and regulations by state and local authorities, epidemics and pandemics, failure of power supply or communication system, or other similar circumstances that prevent the parties from the proper fulfilment of their obligations under these Terms.</p>
         </div>
-    
+
         <div class="section">
             <h2>5. Content, Intellectual Property, and Links</h2>
             <ul>
@@ -237,7 +237,7 @@ export const renderTermsPage = () => {
                 <li>We strongly advise you to read the terms and conditions and privacy policies of any third-party services that you use</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>10. Prohibited Uses</h2>
             <p>You may not:</p>
@@ -248,7 +248,7 @@ export const renderTermsPage = () => {
                 <li>Use the Service for any commercial purposes without permission</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>11. Service Modifications</h2>
             <p>We reserve the right to:</p>
@@ -259,7 +259,7 @@ export const renderTermsPage = () => {
                 <li>Discontinue the Service with reasonable notice</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>12. Termination</h2>
             <ul>
@@ -269,7 +269,7 @@ export const renderTermsPage = () => {
                 <li>These terms survive termination where applicable</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>13. Third-Party Services</h2>
             <ul>
@@ -278,7 +278,7 @@ export const renderTermsPage = () => {
                 <li>Third-party terms and policies may also apply</li>
             </ul>
         </div>
-    
+
         <div class="section">
             <h2>14. Support and Contact</h2>
             <ul>
@@ -310,9 +310,9 @@ export const renderTermsPage = () => {
             </ul>
             <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service and supersede and replace any prior agreements we might have between us regarding the Service.</p>
         </div>
-    
+
         <hr>
-        
+
         <div class="contact">
             <p><strong>ERRINUNDRA PTY LTD T/A FILAMENT AI</strong><br>
             ABN 29 680 843 814<br>
@@ -321,12 +321,12 @@ export const renderTermsPage = () => {
             <p><strong>Last Updated:</strong> September 22, 2025</p>
         </div>
       </main>
-      
+
        <footer>
         <div style="display: flex; gap: 24px; margin-bottom: 16px;">
           <a href="/">Home</a>
-          <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
-          <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+          <a href="/privacy" target="_blank">Privacy Policy</a>
+          <a href="/terms" target="_blank">Terms of Service</a>
         </div>
         <div style="text-align: center; max-width: 600px; line-height: 1.5; margin-bottom: 16px;">
           This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.

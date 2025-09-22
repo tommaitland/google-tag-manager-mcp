@@ -443,8 +443,8 @@ export const renderMainPage = () => {
 
         <footer>
         <div class="footer-links">
-          <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
-          <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+          <a href="/privacy" target="_blank">Privacy Policy</a>
+          <a href="/terms" target="_blank">Terms of Service</a>
         </div>
         <div class="attribution">
           This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.

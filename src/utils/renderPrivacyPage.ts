@@ -46,7 +46,7 @@ export const renderPrivacyPage = () => {
                 color: var(--website-text);
                 background: var(--website-bg);
             }
-            
+
             main {
               flex: 1;
             }
@@ -117,17 +117,17 @@ export const renderPrivacyPage = () => {
         <p>This privacy policy is specific to the MCP Server service and should be read together with our main Privacy Policy available at <a href="https://filamentanalytics.com/privacy" target="_blank">https://filamentanalytics.com/privacy</a>.</p>
 
         <p>We are committed to complying with the Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs). This policy explains how we handle personal information in accordance with Australian privacy law.</p>
-    
+
         <h2>Data We Process</h2>
-    
+
         <p>Filament MCP Server for Google Tag Manager processes the following categories of your personal data:</p>
-    
+
         <h3>Authentication Data</h3>
         <ul>
             <li><strong>OAuth Access Tokens:</strong> We store only OAuth 2.0 access tokens required for Google Tag Manager API authentication</li>
             <li><strong>Google Login ID:</strong> Associated with your authentication session for service access</li>
         </ul>
-    
+
         <h3>What We Do NOT Collect</h3>
         <ul>
             <li>We do not maintain a user database</li>
@@ -135,38 +135,38 @@ export const renderPrivacyPage = () => {
             <li>We do not store any Tag Manager data, containers, or user content</li>
             <li>No user data or Tag Manager content passes through our service for storage</li>
         </ul>
-    
+
         <h3>Where Data is Stored</h3>
         <ul>
             <li>OAuth access tokens are securely stored in encrypted cloud storage</li>
             <li>No other user data or information is stored anywhere in our system</li>
             <li>No data is shared with third parties or with other users or tools</li>
         </ul>
-    
+
         <h3>Legal Basis for Collection and Use</h3>
         <p>Under the Australian Privacy Principles, we collect and use your personal information for the primary purpose of providing the MCP Server service. We only collect information that is reasonably necessary for our functions and activities. The collection and use of authentication data is necessary to provide the service you have requested.</p>
-    
+
         <h3>How We Use Data</h3>
         <ul>
             <li><strong>Authentication Only:</strong> Access tokens are used exclusively to authenticate API requests between MCP clients and Google Tag Manager</li>
             <li><strong>No Data Processing:</strong> We do not process, analyze, or manipulate any data from Google Tag Manager APIs</li>
             <li><strong>Proxy Function:</strong> We act solely as a pass-through middleware, relaying requests and responses</li>
         </ul>
-    
+
         <div class="highlight">
             <h2>Google API Compliance and Limited Use Requirements</h2>
             <p><strong>This service complies with <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy#limited-use" target="_blank">Google's Limited Use requirements</a> for applications utilizing sensitive API scopes.</strong></p>
-            
+
             <p><strong>Affirmative Compliance Statement:</strong><br>
             <em>"The use of raw or derived user data received from Workspace APIs will adhere to the Google User Data Policy, including the Limited Use requirements."</em></p>
-            
+
             <p>Filament MCP Server for Google Tag Manager has access to your Google Tag Manager accounts, containers, workspaces, and items within, so that MCP clients can use the service to interact with these items through our middleware proxy.</p>
-            
+
             <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <h3 style="color: #856404; margin-top: 0;">AI/ML Model Training Prohibition</h3>
                 <p style="color: #856404; margin-bottom: 0;"><strong>Our application does NOT use Google Workspace or Tag Manager user data to train or improve AI/ML models at all.</strong> Specifically:</p>
             </div>
-            
+
             <ul>
                 <li>We do <strong>NOT</strong> use, transfer, or sell user data from Google APIs to create, train, or improve any machine learning or artificial intelligence models (foundational or otherwise)</li>
                 <li>We do <strong>NOT</strong> use data for generalized AI/ML model development</li>
@@ -178,7 +178,7 @@ export const renderPrivacyPage = () => {
                 <li>No data is used for any machine learning, artificial intelligence, or algorithmic purposes whatsoever</li>
             </ul>
         </div>
-    
+
         <h2>Data Sharing</h2>
         <p>We do <strong>NOT</strong>:</p>
         <ul>
@@ -187,21 +187,21 @@ export const renderPrivacyPage = () => {
             <li>Use data for advertising or marketing purposes</li>
             <li>Retain data for analytics or business intelligence</li>
         </ul>
-    
+
         <h2>Data Security</h2>
         <ul>
             <li>All data transmission occurs over encrypted HTTPS connections</li>
             <li>OAuth tokens are stored securely in our cloud infrastructure</li>
             <li>We implement industry-standard security practices for token management</li>
         </ul>
-    
+
         <h2>Data Retention</h2>
         <ul>
             <li><strong>OAuth Tokens:</strong> Personal data will be processed and retained until the purposes of processing are met by the Company</li>
             <li><strong>User Data:</strong> No user data is retained - all GTM data passes through our service without storage</li>
             <li><strong>Logs:</strong> Basic system logs may be retained for up to 30 days for operational purposes only</li>
         </ul>
-    
+
         <h2>Your Rights Under Australian Privacy Law</h2>
         <p>Under the Australian Privacy Principles, you have the following rights:</p>
         <ul>
@@ -217,10 +217,10 @@ export const renderPrivacyPage = () => {
 
         <h2>Children's Privacy</h2>
         <p>Our service is not intended for use by children under 13. We do not knowingly collect personal information from children under 13. If a parent or guardian becomes aware that their child has provided us with personal information, they should contact us and we will delete such information.</p>
-    
+
         <h2>Changes to This Policy</h2>
         <p>We may update this Privacy Policy occasionally. We will notify users of significant changes by updating the effective date.</p>
-    
+
         <div class="contact">
             <h2>Contact Information</h2>
             <p>For questions about this Privacy Policy or to exercise your privacy rights, please contact us:</p>
@@ -239,8 +239,8 @@ export const renderPrivacyPage = () => {
       <footer>
         <div style="display: flex; gap: 24px; margin-bottom: 16px;">
           <a href="/">Home</a>
-          <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
-          <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+          <a href="/privacy" target="_blank">Privacy Policy</a>
+          <a href="/terms" target="_blank">Terms of Service</a>
         </div>
         <div style="text-align: center; max-width: 600px; line-height: 1.5; margin-bottom: 16px;">
           This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.
