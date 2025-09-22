@@ -275,219 +275,328 @@ export function renderApprovalDialog(
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${clientName} | Authorization Request</title>
+        <meta name="description" content="Authorization request for ${clientName} to access Google Tag Manager MCP server hosted by Filament Analytics.">
+        <title>${clientName} | Authorization Request | Filament Analytics</title>
         <style>
-          /* Modern, responsive styling with system fonts */
+          @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
           :root {
-            --primary-color: #0070f3;
-            --error-color: #f44336;
-            --border-color: #e5e7eb;
-            --text-color: #333;
-            --background-color: #fff;
-            --card-shadow: 0 8px 36px 8px rgba(0, 0, 0, 0.1);
+            /* Filament Color System */
+            --burgundy-9: #64203e;
+            --burgundy-12: #321222;
+            --beige-1: #fdfdfc;
+            --beige-2: #f9f9f8;
+            --beige-3: #f1f0ef;
+            --beige-4: #e9e8e6;
+            --beige-5: #e2e0dd;
+            --beige-6: #dad7d3;
+            --beige-7: #cfcbc7;
+            --beige-8: #b9b5b0;
+            --beige-9: #8d8681;
+            --beige-10: #82807b;
+            --beige-11: #63635e;
+            --beige-12: #21201c;
+            --website-bg: #f8f7f5;
+            --website-text: #261b07;
+            --website-text-light: #625a4c;
+            --website-border: #e3dfd5;
+            --website-card: #ffffff;
+            --orange: #b12244;
+
+            /* Semantic Colors */
+            --primary: var(--burgundy-9);
+            --primary-foreground: var(--website-card);
+            --text-primary: var(--website-text);
+            --text-secondary: var(--website-text-light);
+            --border: var(--website-border);
+            --bg-light: var(--beige-2);
+            --background: var(--website-bg);
+            --card: var(--website-card);
           }
-          
+
           html {
             display: flex;
             flex-direction: column;
             min-height: 100%;
           }
-          
+
           body {
             display: flex;
             flex-direction: column;
             flex: 1 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
-                         "Segoe UI Emoji", "Segoe UI Symbol";
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: #f9fafb;
+            color: var(--text-primary);
+            background: var(--background);
             margin: 0;
             padding: 0;
+            font-smoothing: antialiased;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
           }
-          
+
+          .banner {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border);
+          }
+
+          .banner:hover {
+            background: var(--burgundy-12);
+            text-decoration: none;
+            color: var(--primary-foreground);
+            transform: translateY(-1px);
+          }
+
           .container {
             display: flex;
             flex-direction: column;
             flex: 1 0 auto;
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 1rem;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 40px 48px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.625rem;
           }
-          
-          .precard {
-            padding: 16px;
-            text-align: center;
-          }
-          
-          .card {
-            background-color: var(--background-color);
-            border-radius: 8px;
-            box-shadow: var(--card-shadow);
-            padding: 2rem;
-          }
-          
-          .header {
+
+          .logo-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
+            gap: 16px;
+            margin-bottom: 24px;
           }
-          
+
           .logo {
-            width: 48px;
-            height: 48px;
-            margin-right: 1rem;
-            border-radius: 8px;
-            object-fit: contain;
+            height: 40px;
+            width: auto;
           }
-          
-          .title {
-            margin: 0;
-            font-size: 1.3rem;
+
+          .card {
+            background-color: var(--bg-light);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-top: 20px;
+          }
+
+          h1 {
+            color: var(--text-primary);
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 2.5rem;
             font-weight: 400;
-            
-            a {
-              text-decoration: none;
-              color: var(--text-color);
-            }
+            line-height: 1;
+            margin: 0 0 12px 0;
           }
-          
+
+          .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 32px;
+          }
+
           .alert {
             margin: 0;
             font-size: 1.5rem;
-            font-weight: 400;
+            font-weight: 600;
             margin: 1rem 0;
             text-align: center;
+            color: var(--text-primary);
           }
-          
+
           .description {
-            color: #555;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
           }
-          
+
           .client-info {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem 1rem 0.5rem;
-            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            background: var(--card);
+            padding: 20px;
+            margin-bottom: 24px;
           }
-          
+
           .client-name {
             font-weight: 600;
             font-size: 1.2rem;
             margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
           }
-          
+
           .client-detail {
             display: flex;
-            margin-bottom: 0.5rem;
+            margin-bottom: 12px;
             align-items: baseline;
           }
-          
+
           .detail-label {
             font-weight: 500;
             min-width: 120px;
+            color: var(--text-primary);
           }
-          
+
           .detail-value {
-            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-family: 'Geist Mono', monospace;
             word-break: break-all;
+            color: var(--text-secondary);
           }
-          
+
           .detail-value a {
-            color: inherit;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+          }
+
+          .detail-value a:hover {
             text-decoration: underline;
           }
-          
+
           .detail-value.small {
-            font-size: 0.8em;
+            font-size: 0.875em;
           }
-          
-          .external-link-icon {
-            font-size: 0.75em;
-            margin-left: 0.25rem;
-            vertical-align: super;
-          }
-          
+
           .actions {
             display: flex;
             justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 12px;
+            margin-top: 32px;
           }
-          
+
           .button {
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            padding: 10px 20px;
+            border-radius: 0.375rem;
             font-weight: 500;
             cursor: pointer;
             border: none;
             font-size: 1rem;
+            transition: all 0.2s ease;
           }
-          
+
           .button-primary {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--primary);
+            color: var(--primary-foreground);
           }
-          
+
+          .button-primary:hover {
+            background: var(--burgundy-12);
+            transform: translateY(-1px);
+          }
+
           .button-secondary {
             background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
           }
-          
+
+          .button-secondary:hover {
+            background: var(--bg-light);
+          }
+
+          p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+          }
+
+          a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+
           footer {
             display: flex;
-            justify-content: center;
-            column-gap: 24px;
-            padding: 2rem 1rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
           }
-          
+
+          .footer-links {
+            display: flex;
+            gap: 24px;
+          }
+
+          .attribution {
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.5;
+          }
+
           /* Responsive adjustments */
           @media (max-width: 640px) {
             .container {
               margin: 1rem auto;
-              padding: 0.5rem;
+              padding: 24px;
             }
-            
+
             .card {
-              padding: 1.5rem;
+              padding: 20px;
             }
-            
+
             .client-detail {
               flex-direction: column;
             }
-            
+
             .detail-label {
               min-width: unset;
               margin-bottom: 0.25rem;
             }
-            
+
             .actions {
               flex-direction: column;
             }
-            
+
             .button {
               width: 100%;
+            }
+
+            h1 {
+              font-size: 2rem;
+            }
+
+            .footer-links {
+              flex-direction: column;
+              gap: 12px;
+              text-align: center;
             }
           }
         </style>
       </head>
       <body>
+        <a href="https://filamentanalytics.com?utm_source=gtm-mcp&utm_medium=banner&utm_campaign=mcp-server-auth" target="_blank" class="banner">
+          This tool is hosted by Filament - data analytics for non-technical teams
+        </a>
         <div class="container">
-          <div class="precard">
-            <div class="header">
-              ${logoUrl ? `<img src="${logoUrl}" alt="${serverName} Logo" class="logo">` : ""}
-              <h1 class="title">
-                <a href="/">
-                  <strong>${serverName}</strong>
-                </a>
-              </h1>
-            </div>
-            
-            ${serverDescription ? `<p class="description">${serverDescription}</p>` : ""}
+          <div class="logo-container">
+            <a href="https://filamentanalytics.com?utm_source=gtm-mcp&utm_medium=logo&utm_campaign=mcp-server-auth" target="_blank">
+              <img src="https://filamentanalytics.com/filament-mono.svg" alt="Filament Analytics" class="logo" style="width: 150px">
+            </a>
           </div>
+
+          <h1>MCP Server Authorization</h1>
+
+          <p class="subtitle">
+            A remote MCP server with Google OAuth authentication for the Google Tag Manager API.
+          </p>
           
           <div class="card">
             
@@ -571,22 +680,31 @@ export function renderApprovalDialog(
               }
             </div>
             
-            <p>This MCP Client is requesting to be authorized on ${serverName}. If you approve, you will be redirected to complete authentication.</p>
-            
+            <p>This MCP Client is requesting to be authorized to access Google Tag Manager. If you approve, you will be redirected to complete authentication.</p>
+
             <form method="post" action="${new URL(request.url).pathname}">
               <input type="hidden" name="state" value="${encodedState}">
-              
+
               <div class="actions">
                 <button type="button" class="button button-secondary" onclick="window.history.back()">Cancel</button>
                 <button type="submit" class="button button-primary">Approve</button>
               </div>
             </form>
           </div>
+
+          <footer>
+            <div class="footer-links">
+              <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
+              <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+            </div>
+            <div class="attribution">
+              This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.
+              <br>
+              Thank you to the team at <a href="https://stape.io" target="_blank">Stape.ai</a> for building this excellent tool!
+            </div>
+            <div>© 2025 Filament Analytics. All rights reserved.</div>
+          </footer>
         </div>
-        <footer>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
-        </footer>
       </body>
     </html>
   `;

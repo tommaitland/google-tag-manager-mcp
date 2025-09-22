@@ -362,7 +362,7 @@ export const renderMainPage = () => {
         <h1>MCP Server for Google Tag Manager</h1>
 
         <p class="subtitle">
-        A remote MCP server with Google OAuth authentication, providing seamless access to the Google Tag Manager API.
+        Automate your Google Tag Manager through Claude Desktop or Cursor. This MCP can manage your GTM account, create triggers and tags, troubleshoot issues, and publish containers.
         </p>
 
         <h2>Quick Setup Guide</h2>
