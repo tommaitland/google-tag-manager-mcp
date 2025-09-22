@@ -1,221 +1,272 @@
 import type {
-  AuthRequest,
-  OAuthHelpers,
+	AuthRequest,
+	OAuthHelpers,
 } from "@cloudflare/workers-oauth-provider";
-import { Context, Hono } from "hono";
+import { type Context, Hono } from "hono";
 import {
-  fetchUpstreamAuthToken,
-  getUpstreamAuthorizeUrl,
-  Props,
+	fetchUpstreamAuthToken,
+	getUpstreamAuthorizeUrl,
+	type Props,
 } from "./authorizeUtils";
 import { renderMainPage } from "./renderMainPage";
 import { renderPrivacyPage } from "./renderPrivacyPage";
 import { renderTermsPage } from "./renderTermsPage";
 import {
-  clientIdAlreadyApproved,
-  parseRedirectApproval,
-  renderApprovalDialog,
+	clientIdAlreadyApproved,
+	parseRedirectApproval,
+	renderApprovalDialog,
 } from "./workersOAuthUtils";
 
 const app = new Hono<{ Bindings: Env & { OAUTH_PROVIDER: OAuthHelpers } }>();
 
 app.get("/authorize", async (c) => {
-  const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
-  const { clientId } = oauthReqInfo;
+	const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+	const { clientId } = oauthReqInfo;
 
-  if (!clientId) {
-    return c.text("Invalid request", 400);
-  }
+	if (!clientId) {
+		return c.text("Invalid request", 400);
+	}
 
-  if (
-    await clientIdAlreadyApproved(
-      c.req.raw,
-      oauthReqInfo.clientId,
-      c.env.COOKIE_ENCRYPTION_KEY,
-    )
-  ) {
-    return redirectToGoogle(c, oauthReqInfo);
-  }
+	if (
+		await clientIdAlreadyApproved(
+			c.req.raw,
+			oauthReqInfo.clientId,
+			c.env.COOKIE_ENCRYPTION_KEY,
+		)
+	) {
+		return redirectToGoogle(c, oauthReqInfo);
+	}
 
-  return renderApprovalDialog(c.req.raw, {
-    client: await c.env.OAUTH_PROVIDER.lookupClient(clientId),
-    server: {
-      name: "STAPE.AI",
-      description: "",
-    },
-    state: { oauthReqInfo },
-  });
+	return renderApprovalDialog(c.req.raw, {
+		client: await c.env.OAUTH_PROVIDER.lookupClient(clientId),
+		server: {
+			name: "FILAMENTANALYTICS.COM",
+			description: "",
+		},
+		state: { oauthReqInfo },
+	});
 });
 
 app.post("/authorize", async (c) => {
-  const { state, headers } = await parseRedirectApproval(
-    c.req.raw,
-    c.env.COOKIE_ENCRYPTION_KEY,
-  );
+	const { state, headers } = await parseRedirectApproval(
+		c.req.raw,
+		c.env.COOKIE_ENCRYPTION_KEY,
+	);
 
-  if (!state.oauthReqInfo) {
-    return c.text("Invalid request", 400);
-  }
+	if (!state.oauthReqInfo) {
+		return c.text("Invalid request", 400);
+	}
 
-  return redirectToGoogle(c, state.oauthReqInfo, headers);
+	return redirectToGoogle(c, state.oauthReqInfo, headers);
 });
 
 async function redirectToGoogle(
-  c: Context,
-  oauthReqInfo: AuthRequest,
-  headers: Record<string, string> = {},
+	c: Context,
+	oauthReqInfo: AuthRequest,
+	headers: Record<string, string> = {},
 ) {
-  console.log(`/redirectToGoogle oauthReqInfo`, oauthReqInfo);
+	console.log(`/redirectToGoogle oauthReqInfo`, oauthReqInfo);
 
-  const scopes = [
-    "email",
-    "profile",
-    "https://www.googleapis.com/auth/tagmanager.manage.accounts",
-    "https://www.googleapis.com/auth/tagmanager.edit.containers",
-    "https://www.googleapis.com/auth/tagmanager.delete.containers",
-    "https://www.googleapis.com/auth/tagmanager.edit.containerversions",
-    "https://www.googleapis.com/auth/tagmanager.manage.users",
-    "https://www.googleapis.com/auth/tagmanager.publish",
-    "https://www.googleapis.com/auth/tagmanager.readonly",
-  ];
-  return new Response(null, {
-    status: 302,
-    headers: {
-      ...headers,
-      location: getUpstreamAuthorizeUrl({
-        upstreamUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-        scope: scopes.join("  "),
-        clientId: c.env.GOOGLE_CLIENT_ID,
-        redirectUri: new URL("/callback", c.req.raw.url).href,
-        state: btoa(JSON.stringify(oauthReqInfo)),
-        hostedDomain: c.env.HOSTED_DOMAIN,
-      }),
-    },
-  });
+	const scopes = [
+		"email",
+		"profile",
+		"https://www.googleapis.com/auth/tagmanager.manage.accounts",
+		"https://www.googleapis.com/auth/tagmanager.edit.containers",
+		"https://www.googleapis.com/auth/tagmanager.delete.containers",
+		"https://www.googleapis.com/auth/tagmanager.edit.containerversions",
+		"https://www.googleapis.com/auth/tagmanager.manage.users",
+		"https://www.googleapis.com/auth/tagmanager.publish",
+		"https://www.googleapis.com/auth/tagmanager.readonly",
+	];
+	return new Response(null, {
+		status: 302,
+		headers: {
+			...headers,
+			location: getUpstreamAuthorizeUrl({
+				upstreamUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+				scope: scopes.join("  "),
+				clientId: c.env.GOOGLE_CLIENT_ID,
+				redirectUri: new URL("/callback", c.req.raw.url).href,
+				state: btoa(JSON.stringify(oauthReqInfo)),
+				hostedDomain: c.env.HOSTED_DOMAIN,
+			}),
+		},
+	});
 }
 
 app.get("/callback", async (c) => {
-  // Get the oathReqInfo out of KV
-  const oauthReqInfo = JSON.parse(
-    atob(c.req.query("state") as string),
-  ) as AuthRequest;
+	// Get the oathReqInfo out of KV
+	const oauthReqInfo = JSON.parse(
+		atob(c.req.query("state") as string),
+	) as AuthRequest;
 
-  if (!oauthReqInfo.clientId) {
-    return c.text("Invalid state", 400);
-  }
+	if (!oauthReqInfo.clientId) {
+		return c.text("Invalid state", 400);
+	}
 
-  const code = c.req.query("code");
+	const code = c.req.query("code");
 
-  if (!code) {
-    return c.text("Missing code", 400);
-  }
+	if (!code) {
+		return c.text("Missing code", 400);
+	}
 
-  const [accessToken, googleErrResponse] = await fetchUpstreamAuthToken({
-    upstreamUrl: "https://accounts.google.com/o/oauth2/token",
-    clientId: c.env.GOOGLE_CLIENT_ID,
-    clientSecret: c.env.GOOGLE_CLIENT_SECRET,
-    code,
-    redirectUri: new URL("/callback", c.req.url).href,
-    grantType: "authorization_code",
-  });
+	const [accessToken, googleErrResponse] = await fetchUpstreamAuthToken({
+		upstreamUrl: "https://accounts.google.com/o/oauth2/token",
+		clientId: c.env.GOOGLE_CLIENT_ID,
+		clientSecret: c.env.GOOGLE_CLIENT_SECRET,
+		code,
+		redirectUri: new URL("/callback", c.req.url).href,
+		grantType: "authorization_code",
+	});
 
-  if (googleErrResponse) {
-    return googleErrResponse;
-  }
+	if (googleErrResponse) {
+		return googleErrResponse;
+	}
 
-  const userResponse = await fetch(
-    "https://www.googleapis.com/oauth2/v2/userinfo",
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
+	const userResponse = await fetch(
+		"https://www.googleapis.com/oauth2/v2/userinfo",
+		{
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		},
+	);
 
-  if (!userResponse.ok) {
-    return c.text(
-      `Failed to fetch user info: ${await userResponse.text()}`,
-      500,
-    );
-  }
+	if (!userResponse.ok) {
+		return c.text(
+			`Failed to fetch user info: ${await userResponse.text()}`,
+			500,
+		);
+	}
 
-  const { id, name, email } = (await userResponse.json()) as {
-    id: string;
-    name: string;
-    email: string;
-  };
+	const { id, name, email } = (await userResponse.json()) as {
+		id: string;
+		name: string;
+		email: string;
+	};
 
-  const { redirectTo } = await c.env.OAUTH_PROVIDER.completeAuthorization({
-    request: oauthReqInfo,
-    userId: id,
-    metadata: {
-      label: name,
-    },
-    scope: oauthReqInfo.scope,
-    props: {
-      name,
-      email,
-      accessToken,
-      clientId: oauthReqInfo.clientId,
-      userId: id,
-    } as Props,
-  });
+	const { redirectTo } = await c.env.OAUTH_PROVIDER.completeAuthorization({
+		request: oauthReqInfo,
+		userId: id,
+		metadata: {
+			label: name,
+		},
+		scope: oauthReqInfo.scope,
+		props: {
+			name,
+			email,
+			accessToken,
+			clientId: oauthReqInfo.clientId,
+			userId: id,
+		} as Props,
+	});
 
-  return Response.redirect(redirectTo);
+	return Response.redirect(redirectTo);
 });
 
 app.get("/remove", async (c) => {
-  const userId = c.req.query("userId");
-  const clientId = c.req.query("clientId");
-  const accessToken = c.req.query("accessToken");
+	const userId = c.req.query("userId");
+	const clientId = c.req.query("clientId");
+	const accessToken = c.req.query("accessToken");
 
-  if (!userId || !clientId || !accessToken) {
-    return new Response("Invalid request", {
-      status: 400,
-    });
-  }
+	if (!userId || !clientId || !accessToken) {
+		return new Response("Invalid request", {
+			status: 400,
+		});
+	}
 
-  const listUserGrants = await c.env.OAUTH_PROVIDER.listUserGrants(userId);
-  const revokeGrantRequests = listUserGrants.items.map((item) => {
-    return c.env.OAUTH_PROVIDER.revokeGrant(item.id, item.userId);
-  });
+	const listUserGrants = await c.env.OAUTH_PROVIDER.listUserGrants(userId);
+	const revokeGrantRequests = listUserGrants.items.map((item) => {
+		return c.env.OAUTH_PROVIDER.revokeGrant(item.id, item.userId);
+	});
 
-  await Promise.all(revokeGrantRequests);
-  await c.env.OAUTH_PROVIDER.deleteClient(clientId);
-  await fetch(`https://oauth2.googleapis.com/revoke?token=${accessToken}`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/x-www-form-urlencoded",
-    },
-  });
+	await Promise.all(revokeGrantRequests);
+	await c.env.OAUTH_PROVIDER.deleteClient(clientId);
+	await fetch(`https://oauth2.googleapis.com/revoke?token=${accessToken}`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/x-www-form-urlencoded",
+		},
+	});
 
-  return new Response("OK", {
-    status: 200,
-  });
+	return new Response("OK", {
+		status: 200,
+	});
 });
 
 app.get("/", async () => {
-  return new Response(renderMainPage(), {
-    headers: {
-      "content-type": "text/html;charset=UTF-8",
-    },
-  });
+	return new Response(renderMainPage(), {
+		headers: {
+			"content-type": "text/html;charset=UTF-8",
+		},
+	});
 });
 
 app.get("/privacy", async () => {
-  return new Response(renderPrivacyPage(), {
-    headers: {
-      "content-type": "text/html;charset=UTF-8",
-    },
-  });
+	return new Response(renderPrivacyPage(), {
+		headers: {
+			"content-type": "text/html;charset=UTF-8",
+		},
+	});
 });
 
 app.get("/terms", async () => {
-  return new Response(renderTermsPage(), {
-    headers: {
-      "content-type": "text/html;charset=UTF-8",
-    },
-  });
+	return new Response(renderTermsPage(), {
+		headers: {
+			"content-type": "text/html;charset=UTF-8",
+		},
+	});
+});
+
+// Serve static files
+app.get("/public/:filename", async (c) => {
+	const filename = c.req.param("filename");
+
+	// Embed the actual Filament SVG logos
+	const svgFiles: Record<string, string> = {
+		"filament-primary.svg": `<svg width="424" height="84" viewBox="0 0 424 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.0127 0C45.5407 0.000134514 54.6796 3.78087 61.417 10.5107C68.1543 17.2409 71.9393 26.3699 71.9395 35.8877V83.3887H69.6396L61.5928 75.877H59.5791L50.3838 83.3887H48.3701L38.3115 75.877H36.2988L25.3779 83.3887H23.0781L13.5947 76.1084H11.8691L2.30469 83.3887H0.0869141V35.8877C0.0870398 26.3698 3.87093 17.2409 10.6084 10.5107C17.3459 3.78078 26.4846 0.00010199 36.0127 0ZM33.0908 25.6318C30.8948 25.632 29.1143 27.4133 29.1143 29.6094V35.1768C29.1143 37.3728 30.8948 39.1531 33.0908 39.1533C35.287 39.1533 37.0673 37.373 37.0674 35.1768V29.6094C37.0673 27.4132 35.287 25.6318 33.0908 25.6318ZM52.5371 25.6318C50.341 25.6319 48.5606 27.4132 48.5605 29.6094V35.1768C48.5606 37.3729 50.341 39.1532 52.5371 39.1533C54.7331 39.1531 56.5126 37.3728 56.5127 35.1768V29.6094C56.5126 27.4133 54.7331 25.6321 52.5371 25.6318Z" fill="#6D193F"/>
+<path d="M412.979 71.7271C410.032 71.7271 407.964 71.1066 406.775 69.8656C405.585 68.6247 404.991 66.6599 404.991 63.9711V35.2741H399.717V30.7756H401.035C402.948 30.7756 404.267 30.4395 404.991 29.7673C405.715 29.0951 406.309 28.1127 406.775 26.8201L409.179 19.9948H413.678V30.7756H423.372V35.2741H413.678V66.6857H423.372V70.0983C422.493 70.512 421.072 70.8739 419.107 71.1842C417.194 71.5461 415.151 71.7271 412.979 71.7271Z" fill="#6D193F"/>
+<path d="M354.731 66.9185H360.005V36.9805L354.731 35.9722V32.5596L368.46 29.845V37.058H368.847C369.158 36.179 369.623 35.3 370.243 34.421C370.916 33.542 371.717 32.7664 372.648 32.0942C373.63 31.422 374.742 30.8791 375.983 30.4654C377.275 30.0518 378.723 29.845 380.326 29.845C385.238 29.845 388.728 31.1118 390.797 33.6454C392.865 36.1273 393.899 39.876 393.899 44.8915V66.9185H399.173V71.1067H380.093V66.9185H385.212V45.3569C385.212 41.996 384.566 39.5399 383.273 37.9887C381.981 36.4375 379.938 35.6619 377.146 35.6619C376.112 35.6619 375.078 35.8171 374.044 36.1273C373.061 36.3858 372.157 36.8253 371.329 37.4458C370.554 38.0146 369.907 38.7385 369.39 39.6175C368.925 40.4965 368.692 41.5565 368.692 42.7974V66.9185H373.811V71.1067H354.731V66.9185Z" fill="#6D193F"/>
+<path d="M333.345 72.0374C330.346 72.0374 327.683 71.5462 325.356 70.5638C323.03 69.5296 321.065 68.0819 319.462 66.2204C317.859 64.359 316.618 62.1356 315.739 59.5503C314.912 56.965 314.498 54.0953 314.498 50.9412C314.498 47.7354 314.938 44.8398 315.817 42.2545C316.747 39.6692 318.014 37.4717 319.617 35.6619C321.272 33.8005 323.211 32.3786 325.434 31.3962C327.709 30.362 330.191 29.845 332.88 29.845C335.62 29.845 338.076 30.3103 340.248 31.241C342.42 32.1201 344.255 33.3869 345.755 35.0415C347.306 36.6961 348.495 38.6868 349.322 41.0136C350.15 43.3403 350.563 45.9257 350.563 48.7695V50.8636H323.883V53.3455C323.883 57.3786 324.891 60.5069 326.908 62.7302C328.924 64.9019 331.639 65.9878 335.051 65.9878C338.05 65.9878 340.455 65.3414 342.264 64.0488C344.126 62.7044 345.496 61.0498 346.375 59.0849L349.71 61.1015C349.245 62.4459 348.547 63.7644 347.616 65.057C346.737 66.3497 345.625 67.5131 344.281 68.5472C342.937 69.5813 341.36 70.4345 339.55 71.1067C337.74 71.7272 335.672 72.0374 333.345 72.0374ZM323.883 46.753H341.566V45.8998C341.566 42.1769 340.842 39.3072 339.395 37.2907C337.999 35.2224 335.827 34.1883 332.88 34.1883C329.984 34.1883 327.761 35.1966 326.21 37.2131C324.658 39.178 323.883 42.0218 323.883 45.7447V46.753Z" fill="#6D193F"/>
+<path d="M242.85 66.9185H248.124V36.9805L242.85 35.9722V32.5596L256.578 29.845V37.058H256.965C257.276 36.179 257.741 35.3 258.362 34.421C258.982 33.542 259.758 32.7664 260.688 32.0942C261.619 31.422 262.705 30.8791 263.946 30.4654C265.187 30.0518 266.609 29.845 268.212 29.845C271.676 29.845 274.391 30.4913 276.355 31.784C278.372 33.0249 279.768 34.9639 280.544 37.6009H280.776C281.19 36.6702 281.733 35.7395 282.405 34.8088C283.129 33.8781 283.982 33.0508 284.965 32.3269C285.947 31.5513 287.084 30.9567 288.377 30.543C289.67 30.0776 291.169 29.845 292.876 29.845C297.684 29.845 301.097 31.1118 303.113 33.6454C305.13 36.1273 306.138 39.876 306.138 44.8915V66.9185H311.412V71.1067H292.488V66.9185H297.452V45.3569C297.452 41.996 296.805 39.5399 295.513 37.9887C294.272 36.4375 292.333 35.6619 289.696 35.6619C288.662 35.6619 287.653 35.8171 286.671 36.1273C285.688 36.3858 284.809 36.8253 284.034 37.4458C283.258 38.0146 282.638 38.7643 282.172 39.695C281.707 40.574 281.474 41.634 281.474 42.875V66.9185H286.438V71.1067H267.824V66.9185H272.788V45.3569C272.788 41.996 272.141 39.5399 270.849 37.9887C269.608 36.4375 267.669 35.6619 265.032 35.6619C263.998 35.6619 262.989 35.8171 262.007 36.1273C261.024 36.3858 260.145 36.8253 259.37 37.4458C258.594 38.0146 257.974 38.7643 257.508 39.695C257.043 40.574 256.81 41.634 256.81 42.875V66.9185H261.774V71.1067H242.85V66.9185Z" fill="#6D193F"/>
+<path d="M212.47 72.0374C208.437 72.0374 205.386 71.055 203.318 69.0901C201.301 67.0736 200.293 64.3331 200.293 60.8688C200.293 56.9391 201.689 53.966 204.481 51.9495C207.273 49.9329 211.824 48.9246 218.132 48.9246H223.716V43.6506C223.716 40.4965 223.018 38.0921 221.622 36.4375C220.226 34.7829 218.028 33.9556 215.029 33.9556C212.496 33.9556 210.583 34.3176 209.29 35.0415V35.3517C209.859 35.6102 210.376 36.0756 210.841 36.7478C211.358 37.3682 211.617 38.2473 211.617 39.3848C211.617 40.8326 211.177 41.996 210.298 42.875C209.471 43.754 208.256 44.1935 206.653 44.1935C205.308 44.1935 204.171 43.754 203.24 42.875C202.361 41.9443 201.922 40.7033 201.922 39.1521C201.922 37.9629 202.258 36.8253 202.93 35.7395C203.654 34.602 204.688 33.5937 206.032 32.7147C207.377 31.8357 209.006 31.1376 210.919 30.6206C212.883 30.1035 215.133 29.845 217.666 29.845C222.527 29.845 226.198 30.9825 228.68 33.2576C231.162 35.5327 232.403 38.7126 232.403 42.7974V66.996H237.677V70.4862C236.953 70.8999 236.022 71.2618 234.885 71.572C233.747 71.8823 232.532 72.0374 231.239 72.0374C228.861 72.0374 227.103 71.4428 225.965 70.2535C224.879 69.0126 224.336 67.4355 224.336 65.5224V65.1346H223.949C223.587 66.0136 223.121 66.8668 222.553 67.6941C221.984 68.4697 221.234 69.1935 220.303 69.8657C219.424 70.5379 218.339 71.055 217.046 71.4169C215.753 71.8306 214.228 72.0374 212.47 72.0374ZM215.882 66.6082C218.158 66.6082 220.019 66.0653 221.467 64.9795C222.966 63.8936 223.716 62.1098 223.716 59.6279V52.7251H219.062C215.391 52.7251 212.832 53.3197 211.384 54.5089C209.936 55.6982 209.212 57.4045 209.212 59.6279V61.1015C209.212 62.9629 209.807 64.359 210.996 65.2897C212.185 66.1687 213.814 66.6082 215.882 66.6082Z" fill="#6D193F"/>
+<path d="M176.835 66.9183H182.109V19.2967L176.835 18.2884V14.8758L190.796 12.1612V66.9183H196.07V71.1065H176.835V66.9183Z" fill="#6D193F"/>
+<path d="M172.774 66.9185H167.5V36.9805L172.774 35.9722V32.5596L158.814 29.845V66.9185H153.54V71.1067H172.774V66.9185Z" fill="#6D193F"/>
+<rect x="161.425" y="20.6601" width="4.99881" height="4.99881" fill="#6D193F"/>
+<rect x="161.425" y="10.0378" width="5.62366" height="5.62366" fill="#6D193F"/>
+<rect x="167.047" y="15.6614" width="4.99881" height="4.99881" fill="#6D193F"/>
+<rect x="156.427" y="15.6614" width="4.99881" height="4.99881" fill="#6D193F"/>
+<path d="M110.999 66.9183H116.661V21.1581H110.999V16.9699H152.416V30.6204H145.358V21.5459H125.89V41.9441H139.076V36.4374H144.195V52.0269H139.076V46.5201H125.89V66.9183H133.104V71.1065H110.999V66.9183Z" fill="#6D193F"/>
+</svg>`,
+		"filament-mono.svg": `<svg width="424" height="84" viewBox="0 0 424 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.0127 6.10352e-05C45.5407 0.000195549 54.6796 3.78093 61.417 10.5108C68.1543 17.2409 71.9393 26.37 71.9395 35.8878V83.3887H69.6396L61.5928 75.877H59.5791L50.3838 83.3887H48.3701L38.3115 75.877H36.2988L25.3779 83.3887H23.0781L13.5947 76.1085H11.8691L2.30469 83.3887H0.0869141V35.8878C0.0870398 26.3699 3.87093 17.241 10.6084 10.5108C17.3459 3.78084 26.4846 0.000163025 36.0127 6.10352e-05ZM33.0908 25.6319C30.8948 25.6321 29.1143 27.4133 29.1143 29.6094V35.1768C29.1143 37.3729 30.8948 39.1532 33.0908 39.1534C35.287 39.1534 37.0673 37.373 37.0674 35.1768V29.6094C37.0673 27.4132 35.287 25.6319 33.0908 25.6319ZM52.5371 25.6319C50.341 25.632 48.5606 27.4133 48.5605 29.6094V35.1768C48.5606 37.373 50.341 39.1533 52.5371 39.1534C54.7331 39.1531 56.5126 37.3729 56.5127 35.1768V29.6094C56.5126 27.4134 54.7331 25.6322 52.5371 25.6319Z" fill="black"/>
+<path d="M412.979 71.7271C410.032 71.7271 407.964 71.1066 406.775 69.8656C405.585 68.6247 404.991 66.6599 404.991 63.9711V35.2741H399.717V30.7756H401.035C402.948 30.7756 404.267 30.4395 404.991 29.7673C405.715 29.0951 406.309 28.1127 406.775 26.8201L409.179 19.9948H413.678V30.7756H423.372V35.2741H413.678V66.6857H423.372V70.0983C422.493 70.512 421.072 70.8739 419.107 71.1842C417.194 71.5461 415.151 71.7271 412.979 71.7271Z" fill="black"/>
+<path d="M354.731 66.9185H360.005V36.9805L354.731 35.9722V32.5596L368.46 29.845V37.058H368.847C369.158 36.179 369.623 35.3 370.243 34.421C370.916 33.542 371.717 32.7664 372.648 32.0942C373.63 31.422 374.742 30.8791 375.983 30.4654C377.275 30.0518 378.723 29.845 380.326 29.845C385.238 29.845 388.728 31.1118 390.797 33.6454C392.865 36.1273 393.899 39.876 393.899 44.8915V66.9185H399.173V71.1067H380.093V66.9185H385.212V45.3569C385.212 41.996 384.566 39.5399 383.273 37.9887C381.981 36.4375 379.938 35.6619 377.146 35.6619C376.112 35.6619 375.078 35.8171 374.044 36.1273C373.061 36.3858 372.157 36.8253 371.329 37.4458C370.554 38.0146 369.907 38.7385 369.39 39.6175C368.925 40.4965 368.692 41.5565 368.692 42.7974V66.9185H373.811V71.1067H354.731V66.9185Z" fill="black"/>
+<path d="M333.345 72.0374C330.346 72.0374 327.683 71.5462 325.356 70.5638C323.03 69.5296 321.065 68.0819 319.462 66.2204C317.859 64.359 316.618 62.1356 315.739 59.5503C314.912 56.965 314.498 54.0953 314.498 50.9412C314.498 47.7354 314.938 44.8398 315.817 42.2545C316.747 39.6692 318.014 37.4717 319.617 35.6619C321.272 33.8005 323.211 32.3786 325.434 31.3962C327.709 30.362 330.191 29.845 332.88 29.845C335.62 29.845 338.076 30.3103 340.248 31.241C342.42 32.1201 344.255 33.3869 345.755 35.0415C347.306 36.6961 348.495 38.6868 349.322 41.0136C350.15 43.3403 350.563 45.9257 350.563 48.7695V50.8636H323.883V53.3455C323.883 57.3786 324.891 60.5069 326.908 62.7302C328.924 64.9019 331.639 65.9878 335.051 65.9878C338.05 65.9878 340.455 65.3414 342.264 64.0488C344.126 62.7044 345.496 61.0498 346.375 59.0849L349.71 61.1015C349.245 62.4459 348.547 63.7644 347.616 65.057C346.737 66.3497 345.625 67.5131 344.281 68.5472C342.937 69.5813 341.36 70.4345 339.55 71.1067C337.74 71.7272 335.672 72.0374 333.345 72.0374ZM323.883 46.753H341.566V45.8998C341.566 42.1769 340.842 39.3072 339.395 37.2907C337.999 35.2224 335.827 34.1883 332.88 34.1883C329.984 34.1883 327.761 35.1966 326.21 37.2131C324.658 39.178 323.883 42.0218 323.883 45.7447V46.753Z" fill="black"/>
+<path d="M242.85 66.9185H248.124V36.9805L242.85 35.9722V32.5596L256.578 29.845V37.058H256.965C257.276 36.179 257.741 35.3 258.362 34.421C258.982 33.542 259.758 32.7664 260.688 32.0942C261.619 31.422 262.705 30.8791 263.946 30.4654C265.187 30.0518 266.609 29.845 268.212 29.845C271.676 29.845 274.391 30.4913 276.355 31.784C278.372 33.0249 279.768 34.9639 280.544 37.6009H280.776C281.19 36.6702 281.733 35.7395 282.405 34.8088C283.129 33.8781 283.982 33.0508 284.965 32.3269C285.947 31.5513 287.084 30.9567 288.377 30.543C289.67 30.0776 291.169 29.845 292.876 29.845C297.684 29.845 301.097 31.1118 303.113 33.6454C305.13 36.1273 306.138 39.876 306.138 44.8915V66.9185H311.412V71.1067H292.488V66.9185H297.452V45.3569C297.452 41.996 296.805 39.5399 295.513 37.9887C294.272 36.4375 292.333 35.6619 289.696 35.6619C288.662 35.6619 287.653 35.8171 286.671 36.1273C285.688 36.3858 284.809 36.8253 284.034 37.4458C283.258 38.0146 282.638 38.7643 282.172 39.695C281.707 40.574 281.474 41.634 281.474 42.875V66.9185H286.438V71.1067H267.824V66.9185H272.788V45.3569C272.788 41.996 272.141 39.5399 270.849 37.9887C269.608 36.4375 267.669 35.6619 265.032 35.6619C263.998 35.6619 262.989 35.8171 262.007 36.1273C261.024 36.3858 260.145 36.8253 259.37 37.4458C258.594 38.0146 257.974 38.7643 257.508 39.695C257.043 40.574 256.81 41.634 256.81 42.875V66.9185H261.774V71.1067H242.85V66.9185Z" fill="black"/>
+<path d="M212.47 72.0374C208.437 72.0374 205.386 71.055 203.318 69.0901C201.301 67.0736 200.293 64.3331 200.293 60.8688C200.293 56.9391 201.689 53.966 204.481 51.9495C207.273 49.9329 211.824 48.9246 218.132 48.9246H223.716V43.6506C223.716 40.4965 223.018 38.0921 221.622 36.4375C220.226 34.7829 218.028 33.9556 215.029 33.9556C212.496 33.9556 210.583 34.3176 209.29 35.0415V35.3517C209.859 35.6102 210.376 36.0756 210.841 36.7478C211.358 37.3682 211.617 38.2473 211.617 39.3848C211.617 40.8326 211.177 41.996 210.298 42.875C209.471 43.754 208.256 44.1935 206.653 44.1935C205.308 44.1935 204.171 43.754 203.24 42.875C202.361 41.9443 201.922 40.7033 201.922 39.1521C201.922 37.9629 202.258 36.8253 202.93 35.7395C203.654 34.602 204.688 33.5937 206.032 32.7147C207.377 31.8357 209.006 31.1376 210.919 30.6206C212.883 30.1035 215.133 29.845 217.666 29.845C222.527 29.845 226.198 30.9825 228.68 33.2576C231.162 35.5327 232.403 38.7126 232.403 42.7974V66.996H237.677V70.4862C236.953 70.8999 236.022 71.2618 234.885 71.572C233.747 71.8823 232.532 72.0374 231.239 72.0374C228.861 72.0374 227.103 71.4428 225.965 70.2535C224.879 69.0126 224.336 67.4355 224.336 65.5224V65.1346H223.949C223.587 66.0136 223.121 66.8668 222.553 67.6941C221.984 68.4697 221.234 69.1935 220.303 69.8657C219.424 70.5379 218.339 71.055 217.046 71.4169C215.753 71.8306 214.228 72.0374 212.47 72.0374ZM215.882 66.6082C218.158 66.6082 220.019 66.0653 221.467 64.9795C222.966 63.8936 223.716 62.1098 223.716 59.6279V52.7251H219.062C215.391 52.7251 212.832 53.3197 211.384 54.5089C209.936 55.6982 209.212 57.4045 209.212 59.6279V61.1015C209.212 62.9629 209.807 64.359 210.996 65.2897C212.185 66.1687 213.814 66.6082 215.882 66.6082Z" fill="black"/>
+<path d="M176.835 66.9183H182.109V19.2967L176.835 18.2884V14.8758L190.796 12.1612V66.9183H196.07V71.1065H176.835V66.9183Z" fill="black"/>
+<path d="M172.774 66.9185H167.5V36.9805L172.774 35.9722V32.5596L158.814 29.845V66.9185H153.54V71.1067H172.774V66.9185Z" fill="black"/>
+<rect x="161.425" y="20.6602" width="4.99881" height="4.99881" fill="black"/>
+<rect x="161.425" y="10.038" width="5.62366" height="5.62366" fill="black"/>
+<rect x="167.047" y="15.6615" width="4.99881" height="4.99881" fill="black"/>
+<rect x="156.427" y="15.6615" width="4.99881" height="4.99881" fill="black"/>
+<path d="M110.999 66.9183H116.661V21.1581H110.999V16.9699H152.416V30.6204H145.358V21.5459H125.89V41.9441H139.076V36.4374H144.195V52.0269H139.076V46.5201H125.89V66.9183H133.104V71.1065H110.999V66.9183Z" fill="black"/>
+</svg>`
+	};
+
+	const svg = svgFiles[filename];
+	if (svg) {
+		return new Response(svg, {
+			headers: {
+				"content-type": "image/svg+xml",
+				"cache-control": "public, max-age=31536000",
+			},
+		});
+	}
+
+	return new Response("Not Found", { status: 404 });
 });
 
 export { app as apisHandler };

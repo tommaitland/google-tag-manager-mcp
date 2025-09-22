@@ -1,18 +1,19 @@
 /**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
+ * Development configuration for Wrangler
+ * This overrides settings from wrangler.jsonc for local development
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "gtm-mcp-server",
+	"name": "google-tag-manager-mcp-server-dev",
 	"main": "src/index.ts",
-	"account_id": "80fec459ddcf5915faa3f2a9dc637b20",
 	"compatibility_date": "2025-03-10",
 	"compatibility_flags": ["nodejs_compat"],
-	"routes": [
+	// No custom domain for local development
+	"routes": [],
+	"migrations": [
 		{
-			"pattern": "gtm-mcp.filamentanalytics.com",
-			"custom_domain": true
+			"new_sqlite_classes": ["GoogleTagManagerMCPServer"],
+			"tag": "v1"
 		}
 	],
 	"durable_objects": {
@@ -26,13 +27,14 @@
 	"kv_namespaces": [
 		{
 			"binding": "OAUTH_KV",
-			"id": "fd06cda8cd2e4741ad31d8798f584c65"
+			"id": "local-oauth-kv"
 		}
 	],
 	"observability": {
 		"enabled": true
 	},
 	"dev": {
-		"port": 8788
+		"port": 8788,
+		"local_protocol": "http"
 	}
 }

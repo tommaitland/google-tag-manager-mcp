@@ -6,8 +6,22 @@ export const renderTermsPage = () => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="robots" content="noindex,nofollow" />
-        <title>Terms of Service - Stape MCP Server for Google Tag Manager</title>
+        <title>Terms of Service - Filament MCP Server for Google Tag Manager</title>
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+            :root {
+                --burgundy-9: #64203e;
+                --burgundy-12: #321222;
+                --website-bg: #f8f7f5;
+                --website-text: #261b07;
+                --website-text-light: #625a4c;
+                --website-border: #e3dfd5;
+                --website-card: #ffffff;
+                --primary: var(--burgundy-9);
+            }
+
             html {
                 display: flex;
                 flex-direction: column;
@@ -17,30 +31,35 @@ export const renderTermsPage = () => {
                 display: flex;
                 flex-direction: column;
                 flex: 1 0 auto;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
                 line-height: 1.6;
                 max-width: 800px;
                 margin: 0 auto;
                 padding: 20px;
-                color: #333;
+                color: var(--website-text);
+                background: var(--website-bg);
             }
             main {
               flex: 1;
             }
             h1 {
-                color: #2c3e50;
-                border-bottom: 3px solid #3498db;
+                color: var(--website-text);
+                font-family: 'IBM Plex Serif', serif;
+                font-size: 2.5rem;
+                font-weight: 400;
+                border-bottom: 3px solid var(--primary);
                 padding-bottom: 10px;
             }
             h2 {
-                color: #34495e;
+                color: var(--website-text);
                 margin-top: 30px;
+                font-weight: 600;
             }
             h3 {
-                color: #7f8c8d;
+                color: var(--website-text-light);
             }
             strong {
-                color: #2c3e50;
+                color: var(--website-text);
             }
             ul {
                 padding-left: 20px;
@@ -49,21 +68,25 @@ export const renderTermsPage = () => {
                 margin-bottom: 8px;
             }
             .highlight {
-                background-color: #f8f9fa;
-                border-left: 4px solid #e74c3c;
+                background-color: var(--website-card);
+                border-left: 4px solid var(--primary);
                 padding: 15px;
                 margin: 20px 0;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px 0 rgba(38, 27, 7, 0.06);
             }
             .contact {
-                background-color: #ecf0f1;
+                background-color: var(--website-card);
                 padding: 20px;
-                border-radius: 5px;
+                border-radius: 0.625rem;
                 margin-top: 30px;
+                border: 1px solid var(--website-border);
+                box-shadow: 0 2px 4px 0 rgba(38, 27, 7, 0.06);
             }
             hr {
                 border: none;
-                height: 2px;
-                background-color: #bdc3c7;
+                height: 1px;
+                background-color: var(--website-border);
                 margin: 30px 0;
             }
             .section {
@@ -79,11 +102,11 @@ export const renderTermsPage = () => {
     </head>
     <body>
       <main>
-        <h1>Terms of Service - Stape MCP Server for Google Tag Manager</h1>
+        <h1>Terms of Service - Filament MCP Server for Google Tag Manager</h1>
         
         <p><strong>Last updated:</strong> June 20, 2025</p>
         
-        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Stape MCP Server for Google Tag Manager (the "Service") operated by STAPE, INC. ("Company", "us", "we", or "our").</p>
+        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Filament MCP Server for Google Tag Manager (the "Service") operated by Filament Analytics ("Company", "us", "we", or "our").</p>
         
         <p>When we refer to "you" or "your", we mean any person that accesses or uses the Service. Your use of the Service is subject to these Terms and our <a href="/privacy">Privacy Notice</a>.</p>
         
@@ -253,7 +276,7 @@ export const renderTermsPage = () => {
             <h2>14. Support and Contact</h2>
             <ul>
                 <li>The Service is provided on a best-effort basis</li>
-                <p>Please use the following email address for dispute resolution purposes: <strong>support@stape.io</strong></p>
+                <p>Please use the following email address for dispute resolution purposes: <strong>support@filamentanalytics.com</strong></p>
                 <li>We do not guarantee response times or issue resolution</li>
             </ul>
         </div>
@@ -263,7 +286,7 @@ export const renderTermsPage = () => {
             <ul>
                 <li>These Terms shall be governed and construed in accordance with the laws of the State of Delaware</li>
                 <li>You and the Company shall attempt to resolve any disputes by negotiations</li>
-                <li>Please use the following email address for dispute resolution purposes: <strong>support@stape.io</strong></li>
+                <li>Please use the following email address for dispute resolution purposes: <strong>support@filamentanalytics.com</strong></li>
                 <li>In case we cannot resolve the dispute in 30 days from the day we start negotiations, it shall be resolved by the courts of the State of Delaware</li>
                 <li>You also agree that regardless of any statute or law to the contrary, any claim or cause of action of yours arising from or related to the use of the Service must be filed within 3 months after such claim or cause of action arose or be forever barred</li>
             </ul>
@@ -273,16 +296,24 @@ export const renderTermsPage = () => {
         <hr>
         
         <div class="contact">
-            <p><strong>STAPE, INC.</strong><br>
-            Registered address: 8 The Green Suite 12892, Dover, DE, USA, 19901<br>
-            Contact email address: <strong>support@stape.io</strong></p>
+            <p><strong>FILAMENT ANALYTICS</strong><br>
+            Contact email address: <strong>support@filamentanalytics.com</strong></p>
             <p><strong>Last Updated:</strong> June 20, 2025</p>
         </div>
       </main>
       
        <footer>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
+        <div style="display: flex; gap: 24px; margin-bottom: 16px;">
+          <a href="/">Home</a>
+          <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
+          <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+        </div>
+        <div style="text-align: center; max-width: 600px; line-height: 1.5; margin-bottom: 16px;">
+          This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.
+          <br>
+          Thank you to the team at <a href="https://stape.io" target="_blank">Stape.ai</a> for building this excellent tool!
+        </div>
+        <div>© 2025 Filament Analytics. All rights reserved.</div>
       </footer>
     </body>
     </html>

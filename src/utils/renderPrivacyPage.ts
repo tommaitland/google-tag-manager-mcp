@@ -6,8 +6,22 @@ export const renderPrivacyPage = () => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="robots" content="noindex,nofollow" />
-        <title>Privacy Policy - Stape MCP Server for Google Tag Manager</title>
+        <title>Privacy Policy - Filament MCP Server for Google Tag Manager</title>
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+            :root {
+                --burgundy-9: #64203e;
+                --burgundy-12: #321222;
+                --website-bg: #f8f7f5;
+                --website-text: #261b07;
+                --website-text-light: #625a4c;
+                --website-border: #e3dfd5;
+                --website-card: #ffffff;
+                --primary: var(--burgundy-9);
+            }
+
             html {
                 display: flex;
                 flex-direction: column;
@@ -17,31 +31,36 @@ export const renderPrivacyPage = () => {
                 display: flex;
                 flex-direction: column;
                 flex: 1 0 auto;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
                 line-height: 1.6;
                 max-width: 800px;
                 margin: 0 auto;
                 padding: 20px;
-                color: #333;
+                color: var(--website-text);
+                background: var(--website-bg);
             }
             
             main {
               flex: 1;
             }
             h1 {
-                color: #2c3e50;
-                border-bottom: 3px solid #3498db;
+                color: var(--website-text);
+                font-family: 'IBM Plex Serif', serif;
+                font-size: 2.5rem;
+                font-weight: 400;
+                border-bottom: 3px solid var(--primary);
                 padding-bottom: 10px;
             }
             h2 {
-                color: #34495e;
+                color: var(--website-text);
                 margin-top: 30px;
+                font-weight: 600;
             }
             h3 {
-                color: #7f8c8d;
+                color: var(--website-text-light);
             }
             strong {
-                color: #2c3e50;
+                color: var(--website-text);
             }
             ul {
                 padding-left: 20px;
@@ -50,21 +69,25 @@ export const renderPrivacyPage = () => {
                 margin-bottom: 8px;
             }
             .highlight {
-                background-color: #f8f9fa;
-                border-left: 4px solid #3498db;
+                background-color: var(--website-card);
+                border-left: 4px solid var(--primary);
                 padding: 15px;
                 margin: 20px 0;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px 0 rgba(38, 27, 7, 0.06);
             }
             .contact {
-                background-color: #ecf0f1;
+                background-color: var(--website-card);
                 padding: 20px;
-                border-radius: 5px;
+                border-radius: 0.625rem;
                 margin-top: 30px;
+                border: 1px solid var(--website-border);
+                box-shadow: 0 2px 4px 0 rgba(38, 27, 7, 0.06);
             }
             hr {
                 border: none;
-                height: 2px;
-                background-color: #bdc3c7;
+                height: 1px;
+                background-color: var(--website-border);
                 margin: 30px 0;
             }
              footer {
@@ -77,20 +100,20 @@ export const renderPrivacyPage = () => {
     </head>
     <body>
     <main>
-        <h1>Privacy Policy - Stape MCP Server for Google Tag Manager</h1>
+        <h1>Privacy Policy - Filament MCP Server for Google Tag Manager</h1>
         
         <p><strong>Last updated:</strong> June 20, 2025</p>
     
         <h2>Overview</h2>
-        <p>This privacy notice aims to give you information on how Stape, Inc. ("we", "us", "our", the "Company") will collect and process personal data when you use the Stape MCP Server for Google Tag Manager ("you", "your").</p>
+        <p>This privacy notice aims to give you information on how Filament Analytics ("we", "us", "our", the "Company") will collect and process personal data when you use the Filament MCP Server for Google Tag Manager ("you", "your").</p>
         
         <p>This privacy notice only relates to how the Company will process personal data related to the MCP Server service. It is important that you read this privacy notice together with any other privacy notice we may provide on specific occasions when we are collecting or processing personal data about you.</p>
         
-        <p>This privacy notice supplements the other notices and is not intended to override them. You can find precise information on your rights regarding your personal data, international transfers of data, and the Company contact details in the Stape, Inc. Privacy Notice available at <a href="https://stape.io/privacy-notice" target="_blank">https://stape.io/privacy-notice</a>.</p>
+        <p>This privacy notice supplements the other notices and is not intended to override them. You can find precise information on your rights regarding your personal data, international transfers of data, and the Company contact details in the Filament Analytics Privacy Notice available at <a href="https://filamentanalytics.com/privacy" target="_blank">https://filamentanalytics.com/privacy</a>.</p>
     
         <h2>Data We Process</h2>
     
-        <p>Stape MCP Server for Google Tag Manager processes the following categories of your personal data:</p>
+        <p>Filament MCP Server for Google Tag Manager processes the following categories of your personal data:</p>
     
         <h3>Authentication Data</h3>
         <ul>
@@ -130,7 +153,7 @@ export const renderPrivacyPage = () => {
             <p><strong>Affirmative Compliance Statement:</strong><br>
             <em>"The use of raw or derived user data received from Workspace APIs will adhere to the Google User Data Policy, including the Limited Use requirements."</em></p>
             
-            <p>Stape MCP Server for Google Tag Manager has access to your Google Tag Manager accounts, containers, workspaces, and items within, so that MCP clients can use the service to interact with these items through our middleware proxy.</p>
+            <p>Filament MCP Server for Google Tag Manager has access to your Google Tag Manager accounts, containers, workspaces, and items within, so that MCP clients can use the service to interact with these items through our middleware proxy.</p>
             
             <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <h3 style="color: #856404; margin-top: 0;">AI/ML Model Training Prohibition</h3>
@@ -188,15 +211,24 @@ export const renderPrivacyPage = () => {
     
         <div class="contact">
             <h2>Contact Information</h2>
-            <p>For questions about this Privacy Notice or our data practices, please contact us at <strong>support@stape.io</strong>.</p>
+            <p>For questions about this Privacy Notice or our data practices, please contact us at <strong>support@filamentanalytics.com</strong>.</p>
         </div>
     
         <hr>
         <p><strong>Last Updated:</strong> June 20, 2025</p>
       </main>
       <footer>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
+        <div style="display: flex; gap: 24px; margin-bottom: 16px;">
+          <a href="/">Home</a>
+          <a href="https://filamentanalytics.com/privacy" target="_blank">Privacy Policy</a>
+          <a href="https://filamentanalytics.com/terms" target="_blank">Terms of Service</a>
+        </div>
+        <div style="text-align: center; max-width: 600px; line-height: 1.5; margin-bottom: 16px;">
+          This is a hosted fork of the <a href="https://github.com/stape-io/google-tag-manager-mcp-server" target="_blank">Stape.ai MCP server</a> for Google Tag Manager.
+          <br>
+          Thank you to the team at <a href="https://stape.io" target="_blank">Stape.ai</a> for building this excellent tool!
+        </div>
+        <div>© 2025 Filament Analytics. All rights reserved.</div>
       </footer>
     </body>
     </html>
