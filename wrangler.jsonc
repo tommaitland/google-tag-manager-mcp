@@ -23,6 +23,14 @@
 			}
 		]
 	},
+	"migrations": [
+          {
+            "tag": "v1",
+            "new_classes": [
+              "GoogleTagManagerMCPServer"
+            ]
+          }
+        ],
 	"kv_namespaces": [
 		{
 			"binding": "OAUTH_KV",
