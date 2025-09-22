@@ -5,8 +5,16 @@ export const renderTermsPage = () => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="robots" content="noindex,nofollow" />
-        <title>Terms of Service - Filament MCP Server for Google Tag Manager</title>
+        <meta name="description" content="Terms of Service for Filament's free MCP server for Google Tag Manager. Australian jurisdiction, consumer protections, and service conditions.">
+        <title>Terms of Service - MCP Server for Google Tag Manager | Filament Analytics</title>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1P9NYVSXH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-W1P9NYVSXH');
+        </script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -103,10 +111,10 @@ export const renderTermsPage = () => {
     <body>
       <main>
         <h1>Terms of Service - Filament MCP Server for Google Tag Manager</h1>
-        
-        <p><strong>Last updated:</strong> June 20, 2025</p>
-        
-        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Filament MCP Server for Google Tag Manager (the "Service") operated by Filament Analytics ("Company", "us", "we", or "our").</p>
+
+        <p><strong>Last updated:</strong> September 22, 2025</p>
+
+        <p>Please read these Terms of Service ("Terms") carefully before using the Filament MCP Server for Google Tag Manager (the "Service") operated by Errinundra Pty Ltd t/a Filament AI (ABN 29 680 843 814) ("Company", "us", "we", or "our").</p>
         
         <p>When we refer to "you" or "your", we mean any person that accesses or uses the Service. Your use of the Service is subject to these Terms and our <a href="/privacy">Privacy Notice</a>.</p>
         
@@ -276,19 +284,30 @@ export const renderTermsPage = () => {
             <h2>14. Support and Contact</h2>
             <ul>
                 <li>The Service is provided on a best-effort basis</li>
-                <p>Please use the following email address for dispute resolution purposes: <strong>support@filamentanalytics.com</strong></p>
+                <p>Please use the following email address for dispute resolution purposes: <strong>team@filamentanalytics.com</strong></p>
                 <li>We do not guarantee response times or issue resolution</li>
             </ul>
         </div>
-    
+
+        <div class="section">
+            <h2>5. Australian Consumer Law</h2>
+            <ul>
+                <li>If you are a consumer under the Competition and Consumer Act 2010 (Cth), you have certain rights that cannot be excluded, restricted or modified</li>
+                <li>To the extent permitted by law, our liability is limited to the re-supply of the services or payment of the cost of having the services re-supplied</li>
+                <li>Nothing in these Terms is intended to limit or exclude any consumer guarantees under Australian Consumer Law</li>
+                <li>Our goods and services come with guarantees that cannot be excluded under Australian Consumer Law</li>
+            </ul>
+        </div>
+
         <div class="section">
             <h2>6. Governing Law and Dispute Resolution</h2>
             <ul>
-                <li>These Terms shall be governed and construed in accordance with the laws of the State of Delaware</li>
-                <li>You and the Company shall attempt to resolve any disputes by negotiations</li>
-                <li>Please use the following email address for dispute resolution purposes: <strong>support@filamentanalytics.com</strong></li>
-                <li>In case we cannot resolve the dispute in 30 days from the day we start negotiations, it shall be resolved by the courts of the State of Delaware</li>
-                <li>You also agree that regardless of any statute or law to the contrary, any claim or cause of action of yours arising from or related to the use of the Service must be filed within 3 months after such claim or cause of action arose or be forever barred</li>
+                <li>These Terms shall be governed and construed in accordance with the laws of New South Wales, Australia</li>
+                <li>You and the Company shall attempt to resolve any disputes by good faith negotiations for 30 days</li>
+                <li>Please use the following email address for dispute resolution purposes: <strong>team@filamentanalytics.com</strong></li>
+                <li>If we cannot resolve the dispute within 30 days, either party may commence legal proceedings in the courts of New South Wales and the Commonwealth of Australia</li>
+                <li>You agree that any claim arising from or related to the use of the Service must be filed within 12 months after such claim arose or be forever barred</li>
+                <li>Nothing in these Terms excludes, restricts or modifies any consumer guarantee, right or remedy available under the Competition and Consumer Act 2010 (Cth) or equivalent state legislation</li>
             </ul>
             <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service and supersede and replace any prior agreements we might have between us regarding the Service.</p>
         </div>
@@ -296,9 +315,11 @@ export const renderTermsPage = () => {
         <hr>
         
         <div class="contact">
-            <p><strong>FILAMENT ANALYTICS</strong><br>
-            Contact email address: <strong>support@filamentanalytics.com</strong></p>
-            <p><strong>Last Updated:</strong> June 20, 2025</p>
+            <p><strong>ERRINUNDRA PTY LTD T/A FILAMENT AI</strong><br>
+            ABN 29 680 843 814<br>
+            81-83 Campbell Street, Surry Hills NSW 2010, Australia<br>
+            Contact email address: <strong>team@filamentanalytics.com</strong></p>
+            <p><strong>Last Updated:</strong> September 22, 2025</p>
         </div>
       </main>
       

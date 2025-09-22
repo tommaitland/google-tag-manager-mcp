@@ -5,8 +5,15 @@ export const renderPrivacyPage = () => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="robots" content="noindex,nofollow" />
-        <title>Privacy Policy - Filament MCP Server for Google Tag Manager</title>
+        <title>Privacy Policy - MCP Server for Google Tag Manager | Filament Analytics</title>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1P9NYVSXH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-W1P9NYVSXH');
+        </script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -101,15 +108,15 @@ export const renderPrivacyPage = () => {
     <body>
     <main>
         <h1>Privacy Policy - Filament MCP Server for Google Tag Manager</h1>
-        
-        <p><strong>Last updated:</strong> June 20, 2025</p>
-    
+
+        <p><strong>Last updated:</strong> September 22, 2025</p>
+
         <h2>Overview</h2>
-        <p>This privacy notice aims to give you information on how Filament Analytics ("we", "us", "our", the "Company") will collect and process personal data when you use the Filament MCP Server for Google Tag Manager ("you", "your").</p>
-        
-        <p>This privacy notice only relates to how the Company will process personal data related to the MCP Server service. It is important that you read this privacy notice together with any other privacy notice we may provide on specific occasions when we are collecting or processing personal data about you.</p>
-        
-        <p>This privacy notice supplements the other notices and is not intended to override them. You can find precise information on your rights regarding your personal data, international transfers of data, and the Company contact details in the Filament Analytics Privacy Notice available at <a href="https://filamentanalytics.com/privacy" target="_blank">https://filamentanalytics.com/privacy</a>.</p>
+        <p>This privacy policy explains how Errinundra Pty Ltd t/a Filament AI (ABN 29 680 843 814) ("we", "us", "our", "Filament") collects, uses, and protects your personal information when you use the Filament MCP Server for Google Tag Manager (the "Service").</p>
+
+        <p>This privacy policy is specific to the MCP Server service and should be read together with our main Privacy Policy available at <a href="https://filamentanalytics.com/privacy" target="_blank">https://filamentanalytics.com/privacy</a>.</p>
+
+        <p>We are committed to complying with the Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs). This policy explains how we handle personal information in accordance with Australian privacy law.</p>
     
         <h2>Data We Process</h2>
     
@@ -136,8 +143,8 @@ export const renderPrivacyPage = () => {
             <li>No data is shared with third parties or with other users or tools</li>
         </ul>
     
-        <h3>Legal Basis for Processing</h3>
-        <p>We will only use your personal data when the law allows us to. We process authentication data for service-related purposes because such processing is necessary for the performance of a contract to which you are a party (GDPR Art. 6.1.b). Without this information, it will be impossible to perform the agreement between you and us.</p>
+        <h3>Legal Basis for Collection and Use</h3>
+        <p>Under the Australian Privacy Principles, we collect and use your personal information for the primary purpose of providing the MCP Server service. We only collect information that is reasonably necessary for our functions and activities. The collection and use of authentication data is necessary to provide the service you have requested.</p>
     
         <h3>How We Use Data</h3>
         <ul>
@@ -195,27 +202,39 @@ export const renderPrivacyPage = () => {
             <li><strong>Logs:</strong> Basic system logs may be retained for up to 30 days for operational purposes only</li>
         </ul>
     
-        <h2>Your Rights</h2>
-        <p>You can:</p>
+        <h2>Your Rights Under Australian Privacy Law</h2>
+        <p>Under the Australian Privacy Principles, you have the following rights:</p>
         <ul>
-            <li>Revoke access at any time through your Google Account settings</li>
-            <li>Contact us to request token deletion</li>
-            <li>Disconnect the MCP server from your applications</li>
+            <li><strong>Access:</strong> You can request access to the personal information we hold about you</li>
+            <li><strong>Correction:</strong> You can request correction of inaccurate or incomplete information</li>
+            <li><strong>Erasure:</strong> You can request deletion of your personal information in certain circumstances</li>
+            <li><strong>Revoke Access:</strong> You can revoke access at any time through your Google Account settings</li>
+            <li><strong>Complaints:</strong> You can make a complaint to us or to the Office of the Australian Information Commissioner (OAIC)</li>
         </ul>
-    
+
+        <h2>International Data Transfers</h2>
+        <p>Your authentication data may be stored on servers located outside Australia (including in the United States through Cloudflare's infrastructure). We ensure that any overseas recipients are subject to privacy protections substantially similar to the Australian Privacy Principles.</p>
+
         <h2>Children's Privacy</h2>
-        <p>Our service is not intended for use by children under 13. We do not knowingly collect information from children under 13.</p>
+        <p>Our service is not intended for use by children under 13. We do not knowingly collect personal information from children under 13. If a parent or guardian becomes aware that their child has provided us with personal information, they should contact us and we will delete such information.</p>
     
         <h2>Changes to This Policy</h2>
         <p>We may update this Privacy Policy occasionally. We will notify users of significant changes by updating the effective date.</p>
     
         <div class="contact">
             <h2>Contact Information</h2>
-            <p>For questions about this Privacy Notice or our data practices, please contact us at <strong>support@filamentanalytics.com</strong>.</p>
+            <p>For questions about this Privacy Policy or to exercise your privacy rights, please contact us:</p>
+            <p><strong>Email:</strong> team@filamentanalytics.com</p>
+            <p><strong>Post:</strong><br>
+            Errinundra Pty Ltd t/a Filament AI<br>
+            81-83 Campbell Street<br>
+            Surry Hills NSW 2010<br>
+            Australia</p>
+            <p>If you are not satisfied with our response to your privacy concern, you can contact the Office of the Australian Information Commissioner at <a href="https://www.oaic.gov.au" target="_blank">www.oaic.gov.au</a> or 1300 363 992.</p>
         </div>
-    
+
         <hr>
-        <p><strong>Last Updated:</strong> June 20, 2025</p>
+        <p><strong>Last Updated:</strong> September 22, 2025</p>
       </main>
       <footer>
         <div style="display: flex; gap: 24px; margin-bottom: 16px;">

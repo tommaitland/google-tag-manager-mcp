@@ -5,8 +5,24 @@ export const renderMainPage = () => {
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex,nofollow" />
-    <title>Filament MCP Server for Google Tag Manager</title>
+    <meta name="description" content="Free hosted MCP server for Google Tag Manager with OAuth authentication. Connect Claude Desktop to GTM APIs instantly with our interactive setup tool.">
+    <meta name="keywords" content="Google Tag Manager, MCP server, Model Context Protocol, Claude Desktop, GTM API, OAuth, free GTM tools">
+    <meta property="og:title" content="Free MCP Server for Google Tag Manager | Filament Analytics">
+    <meta property="og:description" content="Connect Claude Desktop to Google Tag Manager APIs with our free hosted MCP server. Interactive setup, OAuth authentication, and instant access.">
+    <meta property="og:url" content="https://gtm-mcp.filamentanalytics.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free MCP Server for Google Tag Manager">
+    <meta name="twitter:description" content="Connect Claude Desktop to Google Tag Manager APIs with our free hosted MCP server.">
+    <title>Free MCP Server for Google Tag Manager | Filament Analytics</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1P9NYVSXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-W1P9NYVSXH');
+    </script>
     <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
           @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
