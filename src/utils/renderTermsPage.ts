@@ -5,7 +5,6 @@ export const renderTermsPage = () => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Terms of Service for Filament's free MCP server for Google Tag Manager. Australian jurisdiction, consumer protections, and service conditions.">
         <title>Terms of Service - MCP Server for Google Tag Manager | Filament Analytics</title>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1P9NYVSXH"></script>
         <script>
